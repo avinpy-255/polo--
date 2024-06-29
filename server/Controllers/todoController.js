@@ -29,21 +29,38 @@ const createTodos = async (req, res) => {
 
 
 const updateTodo = async (req, res) => {
-    const {id} = req.params;
-    try{
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).send(`There is todo with the id of ${id}`)
+  const { id } = req.params;
+  const { title, completed } = req.body; // Destructure updated fields
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid todo ID" });
     }
-    const todoId = {_id: id}
-    const update = {completed: true};
-    const updateTodo = await Todos.findOneAndUpdate(todoId, update);
-    if(!updateTodo) {
-         return res.status(404).send(`There is no todo with the id of ${id}`)
+
+    // Create update object with only the fields to be updated
+    const update = {};
+    if (title) {
+      update.title = title; // Update title if provided
     }
-    res.status(200).send(updateTodo)
-    } catch(error) {
-    res.status(500).send(error.message)
+    if (completed !== undefined) { 
+      update.completed = completed; // Update completed status if provided
     }
+
+    const updatedTodo = await Todos.findByIdAndUpdate(
+      id,
+      update, 
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedTodo) {
+      return res.status(404).json({ error: "Todo not found" });
+    }
+
+    res.status(200).json(updatedTodo);
+  } catch (error) {
+    console.error("Error updating todo:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }
 
 

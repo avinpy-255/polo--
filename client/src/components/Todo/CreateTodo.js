@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../axios';
+import ViewTodo from './ViewTodo';
 
 export const CreateTodo = () => {
   const [title, setTitle] = useState('');
@@ -20,6 +21,7 @@ export const CreateTodo = () => {
 
     try {
       await axios.post('/todos', {
+        ...todos,
         title: title,
         completed: false 
       });
@@ -35,8 +37,11 @@ export const CreateTodo = () => {
     fetchData();
   }, []);
 
+  console.log(todos, "todos");
+
   return (
-    <div className="bg-lime-800 p-10 shadow-md flex justify-center flex-col ">
+    <div>
+          <div className="bg-lime-800 p-10 shadow-md flex justify-center flex-col ">
       <h2 className="text-xl font-bold text-lime-300 mb-2">Create New Todo</h2>
       <div className="mb-2">
         <label htmlFor="title" className="block text-sm font-medium text-lime-300">Task Name</label>
@@ -56,5 +61,8 @@ export const CreateTodo = () => {
         Add Todo
       </button>
     </div>
+    <ViewTodo todos={todos} fetchData={fetchData}/>
+    </div>
+    
   );
 };

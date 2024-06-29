@@ -39,6 +39,6 @@ app.get('/todos', getTodos)
 //Create a Todo
 app.post('/todos', createTodos)
 //Update a todo
-app.put('/todos/id:', updateTodo)
+app.put('/todos/:id', updateTodo)
 //delete a todo
 app.delete('/todos/:id', deleteTodo)

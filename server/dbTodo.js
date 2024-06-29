@@ -11,7 +11,7 @@ const todoSchema = mongoose.Schema({
         default: false
     },
     
-}, {timestamp: true})
+}, {timestamps: true})
 
 module.exports = mongoose.model('todos', todoSchema);
 

@@ -1,6 +1,6 @@
 
 import { CreateTodo } from './components/Todo/CreateTodo';
-import ViewTodo from './components/Todo/ViewTodo';
+
 import Header from './components/Head/Header';
 
 function App() {
@@ -8,7 +8,6 @@ function App() {
     <div >
       <Header/>
       <CreateTodo/>
-      <ViewTodo/>
     </div>
   );
 }
